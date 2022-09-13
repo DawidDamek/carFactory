@@ -63,13 +63,14 @@ class CarFactory {
     if (typeof params[0] === 'number') {
       if (this.#isArray(this.brand)) {
         for (let i = 0; i < params; i++) {
-          for (let brand of this.brand) {
+          this.brand.forEach((brand) => {
             let car = this.createCar(brand);
             carsArray.push(car);
-          }
+          });
         }
         return carsArray;
       }
+
       for (let i = 0; i < params; i++) {
         let car = this.createCar(this.brand);
         carsArray.push(car);
