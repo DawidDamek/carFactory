@@ -83,12 +83,11 @@ class CarFactory {
     );
 
     for (let carArr of supportedBrands) {
-      let carsNumber = carArr.shift();
       let carsBrand = carArr.pop();
-      for (let i = 0; i < carsNumber; i++) {
+      supportedBrands.forEach(() => {
         let car = this.createCar(carsBrand);
         carsArray.push(car);
-      }
+      });
     }
     return carsArray;
   }
