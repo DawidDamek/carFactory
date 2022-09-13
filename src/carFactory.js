@@ -77,14 +77,18 @@ class CarFactory {
       return carsArray;
     }
 
-    for (let car of params) {
-      let carsNumber = car[0];
-      let carsBrand = car[1];
+    const supportedBrands = params.filter((param) =>
+      this.brand.includes(this.capitalizeBrandsFunction(param[1]))
+    );
+    for (let carArr of supportedBrands) {
+      let carsNumber = carArr[0];
+      let carsBrand = carArr[1];
       for (let i = 0; i < carsNumber; i++) {
         let car = this.createCar(carsBrand);
         carsArray.push(car);
       }
     }
+    debugger;
     return carsArray;
   }
 }
