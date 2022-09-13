@@ -1,16 +1,16 @@
 class CarFactory {
   static supportedBrands = ['Fiat', 'Lancia', 'Ford', 'Subaru'];
 
-  _isArray(brand) {
+  #isArray(brand) {
     return Boolean(Array.isArray(brand));
   }
 
-  _isNotSupported(brand) {
+  #isNotSupported(brand) {
     return !CarFactory.supportedBrands.includes(brand);
   }
 
   capitalizeBrandsFunction(brand) {
-    if (this._isArray(brand)) {
+    if (this.#isArray(brand)) {
       return brand
         .flat()
         .map((brand) => brand.slice(0, 1).toUpperCase() + brand.slice(1));
@@ -21,9 +21,9 @@ class CarFactory {
   constructor(factory, brand) {
     const capitalizedBrand = this.capitalizeBrandsFunction(brand);
 
-    if (this._isArray(capitalizedBrand)) {
+    if (this.#isArray(capitalizedBrand)) {
       const unsupportedBrands = capitalizedBrand.filter((brand) => {
-        return this._isNotSupported(brand);
+        return this.#isNotSupported(brand);
       });
 
       if (unsupportedBrands.length) {
@@ -37,7 +37,7 @@ class CarFactory {
       this.brand = capitalizedBrand;
       return;
     }
-    if (this._isNotSupported(capitalizedBrand)) {
+    if (this.#isNotSupported(capitalizedBrand)) {
       throw new UnsupportedBrandError(
         `Brand not supported: '${capitalizedBrand}'`
       );
@@ -49,7 +49,7 @@ class CarFactory {
   createCar(carBrand = this.brand) {
     const capitalizedCarBrand = this.capitalizeBrandsFunction(carBrand);
 
-    if (this.brand.includes(capitalizedCarBrand) && !this._isArray(carBrand)) {
+    if (this.brand.includes(capitalizedCarBrand) && !this.#isArray(carBrand)) {
       return { brand: capitalizedCarBrand };
     }
     throw new UnsupportedBrandError(
@@ -61,7 +61,7 @@ class CarFactory {
     const carsArray = [];
 
     if (typeof params[0] === 'number') {
-      if (this._isArray(this.brand)) {
+      if (this.#isArray(this.brand)) {
         for (let i = 0; i < params; i++) {
           for (let brand of this.brand) {
             let car = this.createCar(brand);
@@ -80,6 +80,7 @@ class CarFactory {
     const supportedBrands = params.filter((param) =>
       this.brand.includes(this.capitalizeBrandsFunction(param[1]))
     );
+
     for (let carArr of supportedBrands) {
       let carsNumber = carArr.shift();
       let carsBrand = carArr.pop();
@@ -88,7 +89,6 @@ class CarFactory {
         carsArray.push(car);
       }
     }
-    debugger;
     return carsArray;
   }
 }
