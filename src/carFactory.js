@@ -56,6 +56,37 @@ class CarFactory {
       'Factory does not have a brand or do not support it'
     );
   }
+
+  createCars(...params) {
+    const carsArray = [];
+
+    if (typeof params[0] === 'number') {
+      if (this._isArray(this.brand)) {
+        for (let i = 0; i < params; i++) {
+          for (let brand of this.brand) {
+            let car = this.createCar(brand);
+            carsArray.push(car);
+          }
+        }
+        return carsArray;
+      }
+      for (let i = 0; i < params; i++) {
+        let car = this.createCar(this.brand);
+        carsArray.push(car);
+      }
+      return carsArray;
+    }
+
+    for (let car of params) {
+      let carsNumber = car[0];
+      let carsBrand = car[1];
+      for (let i = 0; i < carsNumber; i++) {
+        let car = this.createCar(carsBrand);
+        carsArray.push(car);
+      }
+    }
+    return carsArray;
+  }
 }
 
 class UnsupportedBrandError extends Error {}
