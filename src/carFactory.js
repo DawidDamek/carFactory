@@ -81,8 +81,8 @@ class CarFactory {
       this.brand.includes(this.capitalizeBrandsFunction(param[1]))
     );
     for (let carArr of supportedBrands) {
-      let carsNumber = carArr[0];
-      let carsBrand = carArr[1];
+      let carsNumber = carArr.shift();
+      let carsBrand = carArr.pop();
       for (let i = 0; i < carsNumber; i++) {
         let car = this.createCar(carsBrand);
         carsArray.push(car);
